@@ -121,26 +121,19 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        //System.out.println("1");
-        for (Wheel wheel : wheels) { //todo
+        for (Wheel wheel : wheels) {
             wheel.travel(speed);
         }
-        //System.out.println("6");
         currentDistance += speed;
     }
 
     //Требуется замена если хотя бы 1 шина с остатоком меньше 25%
     private boolean isNeedPit() {
-        //System.out.println("вернуть потом"); //todo
         for (Wheel wheel : wheels) {
-            //System.out.println("2");
             if (wheel.getStatus() < 25) {
-                //System.out.println("3");
                 return true;
-
             }
         }
-        //System.out.println("4");
         return false;
     }
 
@@ -149,7 +142,6 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
      * Для сортировки результатов
      *
      * @param o the object to be compared.
-     * @return
      */
     @Override
     public int compareTo(F1Cars o) {
@@ -158,8 +150,6 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
 
     /**
      * Получаем случайное значение от 50 до 150
-     *
-     * @return
      */
     private long getNextSpeed() {
         return 150 - random.nextInt(101);
@@ -167,9 +157,6 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
 
     /**
      * Передача ссылки на колесо по номеру позиции
-     *
-     * @param position
-     * @return
      */
     public Wheel getWheel(int position) {
         return wheels[position];

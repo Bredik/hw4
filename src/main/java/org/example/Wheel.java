@@ -10,12 +10,13 @@ public class Wheel {
     private int status = 100;
 
 
-    public void replaceWheel() {
+    public void replaceWheel(int position, String name) {
         try {
             sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("Колесо " + position + " заменено на авто " + name);
         status = 100;
     }
 
