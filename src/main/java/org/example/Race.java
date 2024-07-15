@@ -39,7 +39,6 @@ public class Race {
         }
     }
 
-
     //Регистрируем участников гонки
     public void register(F1Cars participantCar) {
         participantCars.add(participantCar);

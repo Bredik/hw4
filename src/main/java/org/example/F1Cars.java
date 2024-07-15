@@ -71,6 +71,10 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
     public void prepareRace(Race race) {
         this.race = race;
         this.targetDistance = race.getDistance();
+        this.wheels[0] = new Wheel();
+        this.wheels[1] = new Wheel();
+        this.wheels[2] = new Wheel();
+        this.wheels[3] = new Wheel();
         this.start();
     }
 
@@ -117,21 +121,26 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-//        for (Wheel wheel : wheels) { //todo
-//            wheel.travel(speed);
-//        }
+        //System.out.println("1");
+        for (Wheel wheel : wheels) { //todo
+            wheel.travel(speed);
+        }
+        //System.out.println("6");
         currentDistance += speed;
     }
 
     //Требуется замена если хотя бы 1 шина с остатоком меньше 25%
     private boolean isNeedPit() {
         //System.out.println("вернуть потом"); //todo
-//        for (Wheel wheel : wheels) {
-//            if (wheel.getStatus() < 25) {
-//                return true;
-//            }
-//        }
+        for (Wheel wheel : wheels) {
+            //System.out.println("2");
+            if (wheel.getStatus() < 25) {
+                //System.out.println("3");
+                return true;
+
+            }
+        }
+        //System.out.println("4");
         return false;
     }
 
