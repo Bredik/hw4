@@ -3,6 +3,7 @@ package org.example;
 import lombok.Getter;
 
 import java.util.Random;
+import java.util.concurrent.CyclicBarrier;
 
 /**
  * Поток болида
@@ -50,12 +51,16 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
     @Getter
     private long time = 0;
 
-    public F1Cars(long carId, PitStop pitStop) {
+    private CyclicBarrier startB;
+    private CyclicBarrier endB;
+
+    public F1Cars(long carId, PitStop pitStop, CyclicBarrier startB, CyclicBarrier endB) {
         super("F1Car[" + carId + "]");
         this.carId = carId;
         this.pitStop = pitStop;
         random = new Random();
-
+        this.startB = startB;
+        this.endB = endB;
     }
 
     /**
@@ -77,13 +82,23 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
      */
     @Override
     public void run() {
-        // TODO дожидаемся старта гонки
-        race.start(this);
-        while (currentDistance < targetDistance) {
-            moveToTarget();
-        }
-        this.time = race.finish(this);
+        try {
+            System.out.println("Авто " + this.carId + " готовится");
+            startB.await();
 
+            System.out.println("Авто " + this.carId + " поехал");
+            race.start(this);
+            while (currentDistance < targetDistance) {
+                moveToTarget();
+            }
+            this.time = race.finish(this);
+            System.out.println("Авто " + this.carId + " достиг финиша");
+
+            endB.await();
+            // TODO дожидаемся старта гонки
+        } catch (Exception e) {
+
+        }
     }
 
     /**
@@ -103,19 +118,20 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
             throw new RuntimeException(e);
         }
 
-        for (Wheel wheel : wheels) {
-            wheel.travel(speed);
-        }
+//        for (Wheel wheel : wheels) { //todo
+//            wheel.travel(speed);
+//        }
         currentDistance += speed;
     }
 
     //Требуется замена если хотя бы 1 шина с остатоком меньше 25%
     private boolean isNeedPit() {
-        for (Wheel wheel : wheels) {
-            if (wheel.getStatus() < 25) {
-                return true;
-            }
-        }
+        //System.out.println("вернуть потом"); //todo
+//        for (Wheel wheel : wheels) {
+//            if (wheel.getStatus() < 25) {
+//                return true;
+//            }
+//        }
         return false;
     }
 

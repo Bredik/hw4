@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.concurrent.CyclicBarrier;
+
 public class Team {
     private final long id;
 
@@ -7,10 +9,10 @@ public class Team {
 
     private final PitStop pitStop = new PitStop();
 
-    public Team(long id) {
+    public Team(long id, CyclicBarrier startBarrier, CyclicBarrier endBarrier) {
         this.id = id;
         for (int i = 0; i < this.cars.length; i++) {
-            this.cars[i] = new F1Cars(id * 10 + i, pitStop);
+            this.cars[i] = new F1Cars(id * 10 + i, pitStop, startBarrier, endBarrier);
         }
         pitStop.start();
     }

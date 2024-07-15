@@ -21,7 +21,7 @@ public class PitWorker extends Thread {
         while (!isInterrupted()) {
             F1Cars car = pitStop.getCar();
             //TODO работник ждет машину на питстопе и меняет шину на своей позиции
-            car.getWheel(position).replaceWheel();
+            //car.getWheel(position).replaceWheel(); //todo
             //TODO работник сообщает о готовности
         }
     }
