@@ -4,11 +4,18 @@ import lombok.Getter;
 
 import java.util.Random;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Поток болида
  */
 public class F1Cars extends Thread implements Comparable<F1Cars> {
+    private static AtomicBoolean winner;
+
+    static {
+        winner = new AtomicBoolean(false);
+    }
 
     /**
      * Идентификатор болида
@@ -88,18 +95,22 @@ public class F1Cars extends Thread implements Comparable<F1Cars> {
     public void run() {
         try {
             System.out.println("Авто " + this.carId + " готовится");
+            race.register(this);
             startB.await();
 
             System.out.println("Авто " + this.carId + " поехал");
-            race.start(this);
+            this.time = System.currentTimeMillis();
+
             while (currentDistance < targetDistance) {
                 moveToTarget();
             }
             this.time = race.finish(this);
             System.out.println("Авто " + this.carId + " достиг финиша");
 
+            if (winner.compareAndSet(false, true)) {
+                System.out.println("Авто " + this.carId + " выйграл гонку!");
+            }
             endB.await();
-            // TODO дожидаемся старта гонки
         } catch (Exception e) {
 
         }

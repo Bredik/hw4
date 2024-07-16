@@ -1,6 +1,5 @@
 package org.example;
 
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CyclicBarrier;
 
 /**
@@ -36,8 +35,6 @@ public class PitWorker extends Thread {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-                //TODO работник ждет машину на питстопе и меняет шину на своей позиции
-                //TODO работник сообщает о готовности
             }
         }
 

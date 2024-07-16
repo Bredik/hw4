@@ -23,5 +23,6 @@ public class Main {
 
         race.start(startBarrier, endBarrier);
         race.printResults();
+        System.exit(0);
     }
 }

@@ -30,10 +30,9 @@ public class Race {
             }
             startBarrier.await();
             System.out.println("GO!!!");
-            //TODO даем команду на старт гонки
+
             endBarrier.await();
             System.out.println("FINISH!!!");
-            //TODO блокируем поток до завершения гонки
         } catch (Exception e) {
 
         }
@@ -44,24 +43,16 @@ public class Race {
         participantCars.add(participantCar);
     }
 
-
-    public void start(F1Cars f1Cars) {
-        //System.out.println("фиксация времени старта");
-        //фиксация времени старта
-    }
-
     public long finish(F1Cars participant) {
-        //System.out.println("фиксация времени финиша");
-        //фиксация времени финиша
-        return 0; //длительность гонки у данного участника
+        return System.currentTimeMillis() - participant.getTime(); //длительность гонки у данного участника
     }
 
     public void printResults() {
         participantCars.sort(F1Cars::compareTo);
         log.info("Результат гонки:");
-        int position = 0;
+        int position = 1;
         for (F1Cars participant : participantCars) {
-            log.info("Позиция: {} время: {}", position++, participant.getName());
+            log.info("Место: {}, авто {}, время: {}", position++, participant.getName(), participant.getTime());
         }
     }
 }

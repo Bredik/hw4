@@ -35,14 +35,6 @@ public class PitStop extends Thread {
         } finally {
             semaphore.release();
         }
-
-        // TODO условие: на питстоп может заехать только 1 пилот
-        // TODO держим поток до момента смены всех шин
-        // TODO каждую шину меняет отдельный PitWorker поток
-        // TODO дожидаемся когда все PitWorker завершат свою работу над машиной
-        //TODO метод запускается из потока болида, нужна синхронизация с потоком питстопа
-
-        // TODO отпускаем машину
     }
 
 
@@ -57,7 +49,6 @@ public class PitStop extends Thread {
         while (badWheels.isEmpty()) {
            return null;
         }
-        //TODO Блокируем поток до момента поступления машины на питстоп и возвращаем ее
         return badWheels.peek();
     }
 }

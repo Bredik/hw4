@@ -22,6 +22,4 @@ public class Team {
             this.cars[i].prepareRace(race);
         }
     }
-
-
 }
